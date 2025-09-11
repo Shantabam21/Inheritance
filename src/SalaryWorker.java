@@ -9,6 +9,10 @@ public class SalaryWorker extends Worker{
     }
 
     @Override
+    public String toString(){
+        return super.getIDNum() + ", " + super.getFirstName() + ", " + super.getLastName() + ", " + super.getTitle() + ", " + super.getYOB() + ", " + super.getHourlyPayRate() + ", " + annualSalary;
+    }
+    @Override
     public double calculateWeeklyPay(double hoursWorked) {
         return annualSalary / 52;
     }

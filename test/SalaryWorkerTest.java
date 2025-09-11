@@ -107,4 +107,11 @@ class SalaryWorkerTest {
     void testHashCode() {
         assertNotEquals(s1.hashCode(), s2.hashCode());
     }
+
+    @Test
+    void testToString() {
+        String expected = "000001, Askar, Bolot, Esq., 2007, 48.08, 100000.0";
+        String actual = s1.toString();
+        assertEquals(expected, actual);
+    }
 }
