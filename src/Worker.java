@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * Represents a worker who is paid by the hour.
  * Extends the Person class to include hourly pay rate.
@@ -61,20 +63,18 @@ public class Worker extends Person{
     void displayWeeklyPay(double hoursWorked) {
         double regularPay = hourlyPayRate * hoursWorked;
         if (hoursWorked <= 40) {
-            System.out.println("Regular Pay hours: " + (hoursWorked));
-            System.out.println("Regular Pay: " + regularPay);
-            System.out.println("Overtime Pay hours: " + 0);
-            System.out.println("Overtime Pay: " + 0);
-            System.out.println("Combined Pay: " + (regularPay));
+            System.out.printf("%-22s %-18s %-22s %-18s %-18s", "Regular Pay hours", "Regular Pay", "Overtime Pay Hours", "Overtime Pay", "Combined Pay");
+            System.out.println("======================================================================================================");
+            System.out.printf("%-22s %-18s %-22s %-18s %-18s", hoursWorked, regularPay, 0, 0, regularPay);
         } else {
             double overtimeHours = (hoursWorked - 40);
             regularPay = hourlyPayRate * (hoursWorked - overtimeHours);
             double overtimePay = overtimeHours * (hourlyPayRate * 1.5);
-            System.out.println("Regular Pay hours: " + (hoursWorked - overtimeHours));
-            System.out.println("Regular Pay: " + regularPay);
-            System.out.println("Overtime Pay hours: " + overtimeHours);
-            System.out.println("Overtime Pay: " + overtimePay);
-            System.out.println("Combined Pay: " + (regularPay + overtimePay));
+
+            System.out.printf("%-22s %-18s %-22s %-18s %-18s", "Regular Pay hours", "Regular Pay", "Overtime Pay Hours", "Overtime Pay", "Combined Pay");
+            System.out.println();
+            System.out.println("======================================================================================================");
+            System.out.printf("%-22s %-18s %-22s %-18s %-18s", (hoursWorked - overtimeHours), regularPay, overtimeHours, overtimePay, (regularPay + overtimePay));
         }
 
     }
@@ -109,16 +109,26 @@ public class Worker extends Person{
      */
     @Override
     public String toXML() {
-        String retString = "<Person>";
+        String retString = "<Worker>";
         retString += "<IDNum>" + super.getIDNum() + "</IDNum>";
         retString += "<firstName>" + super.getFirstName() + "</firstName>";
         retString += "<lastName>" + super.getLastName() + "</lastName>";
         retString += "<title>" + super.getTitle() + "</title>";
         retString += "<YOB>" + super.getYOB() + "</YOB>";
-        retString += "<hourlyPayRate>" + hourlyPayRate + "</YOB></Person>";
+        retString += "<hourlyPayRate>" + hourlyPayRate + "</hourlyPayRate></Worker>";
         return retString;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Worker worker = (Worker) o;
+        return Double.compare(hourlyPayRate, worker.hourlyPayRate) == 0;
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), hourlyPayRate);
+    }
 }
